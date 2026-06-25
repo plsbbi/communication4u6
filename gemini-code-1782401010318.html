@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giáo viên tạo: Ms Lê Hằng English</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatEffect {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(15deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #a1c4fd, #c2e9fb, #fbc2eb, #e6b980, #feedd2);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        .patterns {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .pattern-item {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            animation: floatEffect 7s ease-in-out infinite;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            color: #2b6cb0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        }
+
+        header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .warning-box {
+            background: #fff5f5;
+            border-left: 6px solid #ff4d4d;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 35px;
+            box-shadow: 0 6px 20px rgba(255, 77, 77, 0.12);
+        }
+
+        .warning-title {
+            font-weight: bold;
+            color: #cc0000;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .exercise-title {
+            background: #2b6cb0;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 14px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 40px 0 20px 0;
+            box-shadow: 0 4px 15px rgba(43, 108, 176, 0.2);
+            display: inline-block;
+        }
+
+        .context-box {
+            background: rgba(255, 255, 255, 0.7);
+            border-left: 4px solid #319795;
+            padding: 15px 20px;
+            border-radius: 0 16px 16px 0;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            border: 2px solid #fff;
+            transition: transform 0.2s ease;
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .btn-option {
+            background: #fff;
+            border: 2px solid #e2e8f0;
+            border-bottom: 5px solid #cbd5e1;
+            border-radius: 16px;
+            padding: 14px 20px;
+            font-size: 1.05rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            font-weight: 500;
+            color: #334155;
+            outline: none;
+        }
+
+        .btn-option:hover:not(:disabled) {
+            transform: scale(1.015) translateY(-2px);
+            border-bottom-width: 7px;
+            background-color: #f8fafc;
+        }
+
+        .btn-option:active:not(:disabled) {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+
+        .btn-option.correct {
+            background-color: #dcfce7 !important;
+            border-color: #4ade80 !important;
+            border-bottom-color: #16a34a !important;
+            color: #14532d !important;
+            font-weight: bold;
+        }
+
+        .btn-option.wrong {
+            background-color: #fee2e2 !important;
+            border-color: #f87171 !important;
+            border-bottom-color: #dc2626 !important;
+            color: #7f1d1d !important;
+            font-weight: bold;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .explanation-box {
+            margin-top: 25px;
+            background: #f0fdfa;
+            border: 2px dashed #0d9488;
+            border-radius: 18px;
+            padding: 20px;
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .exp-section {
+            margin-bottom: 14px;
+        }
+        .exp-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .exp-title {
+            font-weight: bold;
+            color: #0f766e;
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+
+        .exp-content {
+            font-size: 0.98rem;
+            line-height: 1.6;
+            color: #334155;
+            padding-left: 15px;
+            border-left: 3px solid #ccfbf1;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 50px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #3182ce, #2b6cb0);
+            color: white;
+            border: none;
+            border-bottom: 6px solid #1a365d;
+            border-radius: 20px;
+            padding: 16px 40px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(43, 108, 176, 0.35);
+            transition: all 0.1s ease;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.04) translateY(-2px);
+            box-shadow: 0 12px 28px rgba(43, 108, 176, 0.45);
+            border-bottom-width: 8px;
+        }
+
+        .btn-submit:active {
+            transform: translateY(5px);
+            border-bottom-width: 2px;
+        }
+
+        .result-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+            margin-top: 30px;
+            border: 3px solid #4299e1;
+        }
+
+        .score-text {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: #2b6cb0;
+            margin-bottom: 15px;
+        }
+
+        .teacher-advice {
+            background: #ebf8ff;
+            border: 2px dashed #90cdf4;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .teacher-avatar {
+            font-weight: bold;
+            color: #2b6cb0;
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .advice-content {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #2d3748;
+            font-style: italic;
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+    <div class="patterns" id="patterns-container"></div>
+
+    <div class="container">
+        <header>
+            <h1>Giáo viên tạo: Ms Lê Hằng English</h1>
+            <p>🌟 💎 Ứng Dụng Thực Hành Hỏi Đường & Giao Tiếp Đời Sống 💎 🌟</p>
+        </header>
+
+        <div class="warning-box">
+            <div class="warning-title">⚠️ LỜI NHẮC CỰC KỲ QUAN TRỌNG ⚠️</div>
+            <div class="warning-content">
+                Các em học sinh lưu ý: Đây là những dạng bài tập tương tác phản xạ hội thoại vô cùng quan trọng. Ngay sau khi chọn đáp án, hệ thống sẽ mở <strong>khung phân tích chi tiết 4 bước độc quyền</strong> của cô Lê Hằng. Hãy đọc kỹ phần dịch nghĩa, phân tích văn phong phản xạ giao tiếp để hiểu bản chất vì sao các đáp án kia không phù hợp nhé!
+            </div>
+        </div>
+
+        <div id="quiz-container"></div>
+
+        <div class="submit-section">
+            <button class="btn-submit" onclick="submitQuiz()">🎉 NỘP BÀI NHẬN ĐÁNH GIÁ 🎉</button>
+        </div>
+
+        <div id="result-card" class="result-card">
+            <h2>Kết Quả Làm Bài</h2>
+            <div class="score-text" id="score-display">0/0</div>
+            <div class="teacher-advice">
+                <div class="teacher-avatar">👩‍🏫 Lời khuyên từ cô Lê Hằng:</div>
+                <div class="advice-content" id="advice-display"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(type) {
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.1); 
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                    osc.start(audioCtx.currentTime);
+                    osc.stop(audioCtx.currentTime + 0.35);
+                } else {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+                    osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                    osc.start(audioCtx.currentTime);
+                    osc.stop(audioCtx.currentTime + 0.2);
+                }
+            } catch (e) { console.log(e); }
+        }
+
+        const quizData = [
+            // Exercise 8
+            {
+                ex: "Exercise 8: Complete the following exchanges",
+                context: "Tình huống một người qua đường đang tìm kiếm phòng tập gym gần nhất.",
+                question: "1. \"Excuse me. Where is the nearest gym, please?\" – “_____________”",
+                options: [
+                    "Cross the road. Then go straight. It's right on your left.",
+                    "Yes, there's one next to the supermarket.",
+                    "Oh, I am sorry. I can't go to the gym.",
+                    "So if there is, what will you do?"
+                ],
+                correct: 0,
+                translation: "“Xin lỗi. Cho hỏi phòng tập gym gần nhất ở đâu ạ?” – “Băng qua đường. Sau đó đi thẳng. Nó nằm ngay bên tay trái của bạn.”",
+                details: {
+                    "A": "Cross the road. Then go straight. It's right on your left.: Băng qua đường. Sau đó đi thẳng. Nó ở ngay bên trái bạn. (Câu chỉ đường chi tiết)",
+                    "B": "Yes, there's one next to the supermarket.: Có, có một cái cạnh siêu thị. (Trả lời cho câu hỏi Có/Không 'Is there...?')",
+                    "C": "Oh, I am sorry. I can't go to the gym.: Ồ, mình xin lỗi. Mình không thể đi tập gym. (Từ chối một lời mời)",
+                    "D": "So if there is, what will you do?: Vậy nếu có thì bạn sẽ làm gì? (Câu vặn vẹo, thô lỗ trong giao tiếp)"
+                },
+                why_correct: "Câu hỏi sử dụng từ để hỏi 'Where' (Ở đâu), yêu cầu người nghe phải cung cấp thông tin định vị hoặc các bước chỉ dẫn đường đi. Phương án chỉ đường 'Cross the road...' đáp ứng chính xác nhất ngữ cảnh.",
+                why_wrong: "Phương án B sai vì dùng để trả lời câu hỏi Yes/No. Phương án C nhầm thành từ chối lời mời rủ rê. Phương án D không mang tính xây dựng hay lịch sự khi có người hỏi đường."
+            },
+            {
+                ex: "Exercise 8: Complete the following exchanges",
+                context: "Nhóm bạn đang hỏi thăm đường tới rạp chiếu phim bằng cấu trúc lịch sự.",
+                question: "2. “Excuse me. Could you tell us the way to the cinema?\" – “_____________”",
+                options: [
+                    "Sure. Go straight ahead. Then turn right.",
+                    "Don't do that.",
+                    "I'm sorry I don't like films.",
+                    "I have a class."
+                ],
+                correct: 0,
+                translation: "“Xin lỗi. Bạn có thể chỉ đường cho chúng tôi đến rạp chiếu phim được không?” – “Chắc chắn rồi. Đi thẳng về phía trước. Sau đó rẽ phải.”",
+                details: {
+                    "A": "Sure. Go straight ahead. Then turn right.: Chắc chắn rồi. Đi thẳng về phía trước. Sau đó rẽ phải. (Lời đồng ý + chỉ đường)",
+                    "B": "Don't do that.: Đừng làm thế. (Câu ngăn cản hành động xấu)",
+                    "C": "I'm sorry I don't like films.: Mình xin lỗi mình không thích phim. (Lạc đề sở thích cá nhân)",
+                    "D": "I have a class.: Mình có tiết học rồi. (Văn phong từ chối lời rủ đi học)"
+                },
+                why_correct: "Cấu trúc 'Could you tell us the way to...?' là lời yêu cầu giúp đỡ chỉ đường lịch sự. Người bản xứ thường đáp lại bằng 'Sure' (Chắc chắn rồi) hoặc 'Of course' rồi đưa ra biển chỉ dẫn hành động tiếp theo.",
+                why_wrong: "B, C, D đều lạc đề. Người hỏi chỉ muốn hỏi đường đi chứ không rủ người nói đi xem phim cùng, nên việc từ chối vì 'không thích phim' hay 'bận học' là không logic."
+            },
+            {
+                ex: "Exercise 8: Complete the following exchanges",
+                context: "Một người đưa ra ý kiến rủ cả nhóm đi tham quan Chùa Cầu.",
+                question: "3. “Let's go to Chua Cau!” – “_____________ ”",
+                options: [
+                    "That's a great idea.",
+                    "Go straight and turn right.",
+                    "I think we're lost.",
+                    "There's girl. Let's ask her."
+                ],
+                correct: 0,
+                translation: "“Chúng ta hãy đi Chùa Cầu đi!” – “Đó là một ý kiến tuyệt vời.”",
+                details: {
+                    "A": "That's a great idea.: Đó là một ý tưởng tuyệt vời. (Sự đồng thuận lời đề nghị)",
+                    "B": "Go straight and turn right.: Đi thẳng và rẽ phải. (Dùng khi có ai hỏi đường)",
+                    "C": "I think we're lost.: Tớ nghĩ chúng ta bị lạc rồi. (Tình huống mất phương hướng)",
+                    "D": "There's girl. Let's ask her.: Có một cô gái kìa. Hãy hỏi cô ấy đi. (Dùng khi đang tìm đường)"
+                },
+                why_correct: "Mẫu câu bắt đầu bằng 'Let's + V' dùng để đưa ra một lời đề xuất, gợi ý cùng làm gì. Câu trả lời phản xạ tự nhiên nhất để tán thành ý kiến này là 'That's a great idea' hoặc 'That sounds great'.",
+                why_wrong: "Các đáp án khác đều tập trung vào việc chỉ đường hoặc hỏi đường, không khớp với hành vi phản xạ lại một lời rủ rê đi chơi."
+            },
+            {
+                ex: "Exercise 8: Complete the following exchanges",
+                context: "Hỏi về đặc điểm không gian sinh thái của thành phố.",
+                question: "4. \"Is your city green?\" – “_____________”",
+                options: [
+                    "Yes, it is. It has a lot of trees.",
+                    "No, our city is blue.",
+                    "I don't talk to you.",
+                    "I am colouring it."
+                ],
+                correct: 0,
+                translation: "“Thành phố của bạn có xanh không?” – “Có chứ. Nó có rất nhiều cây xanh.”",
+                details: {
+                    "A": "Yes, it is. It has a lot of trees.: Có chứ. Nó có rất nhiều cây xanh. (Định nghĩa tính từ 'green')",
+                    "B": "No, our city is blue.: Không, thành phố của chúng tôi màu xanh da trời. (Hiểu sai nghĩa đen của từ 'green' trong đô thị)",
+                    "C": "I don't talk to you.: Tớ không thèm nói chuyện với bạn. (Thô lỗ)",
+                    "D": "I am colouring it.: Tớ đang tô màu cho nó. (Hành động không thực tế với thành phố)"
+                },
+                why_correct: "Trong tiếng Anh, một thành phố 'green' (thành phố xanh) mang nghĩa bóng là có nhiều không gian thiên nhiên, trong lành, thân thiện với môi trường. Câu trả lời giải thích 'It has a lot of trees' làm rõ nghĩa hoàn hảo cho từ 'green'.",
+                why_wrong: "Phương án B bị bẫy vì dịch thô từ 'green' thành màu sắc nên đối chọi lại bằng màu 'blue' (phi lý). C và D lạc đề văn phong giao tiếp."
+            },
+            {
+                ex: "Exercise 8: Complete the following exchanges",
+                context: "Lan đề xuất một chuyến đi chơi về quê của mình.",
+                question: "5. Lan: \"Why don’t we take a trip to my home town?\"<br>Nam: \"_____________”",
+                options: [
+                    "That’s a good idea.",
+                    "Yes, we do.",
+                    "Not at all.",
+                    "You’re welcome."
+                ],
+                correct: 0,
+                translation: "Lan: “Tại sao chúng ta không làm một chuyến đi về quê của tớ nhỉ?”<br>Nam: “Ý kiến hay đấy!”",
+                details: {
+                    "A": "That’s a good idea.: Ý kiến hay đấy. (Đồng ý lời gợi ý)",
+                    "B": "Yes, we do.: Có, chúng tớ có. (Dùng để trả lời câu hỏi trợ động từ Do)",
+                    "C": "Not at all.: Không có gì đâu/Không bận tâm. (Dùng để đáp lại lời cảm ơn hoặc xin lỗi)",
+                    "D": "You’re welcome.: Không có gì. (Dùng để đáp lại lời cảm ơn)"
+                },
+                why_correct: "Cấu trúc 'Why don't we + V...?' là một câu đề nghị, rủ rê (Suggestion). Phương án 'That's a good idea' diễn tả sự hưởng ứng, đồng tình một cách lịch sự và phổ biến nhất.",
+                why_wrong: "Mặc dù câu hỏi có dạng 'Why don't we' nhưng bản chất nó không phải câu hỏi thông tin Có/Không thông thường nên không dùng 'Yes, we do' (phương án B sai). C và D dùng sai hoàn cảnh chức năng ngôn ngữ."
+            },
+
+            // Exercise 9
+            {
+                ex: "Exercise 9: Arrange the sentences into a meaningful conversation",
+                context: "Brian hỏi thăm Ally về sự xuất hiện của các tiện ích mua sắm xung quanh khu vực.",
+                question: "1. Sắp xếp các câu sau thành đoạn hội thoại hợp lý:<br>a. Brian: Perfect! That's very convenient.<br>b. Ally: Oh yes, there's a big one just two blocks away.<br>c. Brian: Is there a good supermarket around here?",
+                options: [
+                    "c - b - a",
+                    "a - b - c",
+                    "b - c - a",
+                    "c - a - b"
+                ],
+                correct: 0,
+                translation: "Thứ tự đúng:<br>c. Brian: Có siêu thị nào tốt quanh đây không?<br>b. Ally: Ồ có chứ, có một cái lớn lắm chỉ cách đây hai dãy nhà thôi.<br>a. Brian: Tuyệt vời! Như vậy thật là thuận tiện.",
+                details: {
+                    "A": "c - b - a: Tiến trình logic: Hỏi có hay không -> Trả lời xác nhận và vị trí -> Khen ngợi sự tiện lợi.",
+                    "B": "a - b - c: Phá vỡ logic, khen ngợi xuất hiện trước khi biết thông tin.",
+                    "C": "b - c - a: Câu trả lời 'Oh yes' xuất hiện ở vị trí mồ côi trước câu hỏi.",
+                    "D": "c - a - b: Brian tự khen 'convenient' khi Ally chưa kịp chỉ ra vị trí siêu thị nằm ở đâu."
+                },
+                why_correct: "Mạch hội thoại chuẩn phải đi từ nhu cầu tìm kiếm. Câu (c) đặt câu hỏi tồn tại 'Is there...?'. Câu (b) hồi đáp lại bằng 'Oh yes' và cung cấp vị trí 'just two blocks away'. Từ thông tin vị trí gần đó, câu (a) chốt lại bằng cảm xúc 'Perfect! That's very convenient' (Thuận tiện vì ở ngay gần).",
+                why_wrong: "Các phương án khác đảo lộn trật tự nguyên nhân - kết quả, làm mất tính liên kết tự nhiên của hội thoại."
+            },
+            {
+                ex: "Exercise 9: Arrange the sentences into a meaningful conversation",
+                context: "Lời chào hỏi và nhận xét cảm tưởng về khu dân cư mới.",
+                question: "2. Sắp xếp các câu sau thành đoạn hội thoại hợp lý:<br>a. Brian: It's great, Ally! I really like the park nearby.<br>b. Ally: Hi Brian! How do you like our neighborhood?<br>c. Ally: Yes, it's very nice for walks.",
+                options: [
+                    "b - a - c",
+                    "a - b - c",
+                    "c - a - b",
+                    "d - b - c"
+                ],
+                correct: 0,
+                translation: "Thứ tự đúng:<br>b. Ally: Chào Brian! Cậu thấy khu dân cư của chúng ta thế nào?<br>a. Brian: Nó tuyệt lắm Ally! Tớ thực sự thích cái công viên ở gần đây.<br>c. Ally: Đúng vậy, nó rất đẹp để đi dạo bộ.",
+                details: {
+                    "A": "b - a - c: Trật tự hoàn hảo: Chào hỏi + hỏi cảm nhận -> Trả lời tổng quan và điểm yêu thích -> Tán đồng về điểm yêu thích đó.",
+                    "B": "a - b - c: Sai, Brian tự nói cảm tưởng trước khi nhận lời chào từ Ally.",
+                    "C": "c - a - b: Sai, câu 'Yes, it's very nice...' đứng đầu không rõ đang ám chỉ cho vật gì.",
+                    "D": "b - c - a: Sai mạch nối tiếp thông tin."
+                },
+                why_correct: "Đoạn hội thoại bắt buộc phải bắt đầu bằng lời chào và câu hỏi mở đầu câu chuyện của Ally ở câu (b): 'Hi Brian! How do you like...?'. Brian trả lời ở câu (a) khen ngợi và nhắc tới từ khóa 'the park nearby'. Cuối cùng câu (c) sử dụng đại từ 'it' để thay thế cho 'the park' và bổ sung lợi ích 'nice for walks'.",
+                why_wrong: "Sắp xếp sai vị trí sẽ khiến các đại từ thay thế như 'it' ở câu (c) bị mất đi danh từ gốc đứng trước để bổ nghĩa."
+            },
+            {
+                ex: "Exercise 9: Arrange the sentences into a meaningful conversation",
+                context: "Brian muốn tìm một không gian để tập luyện thể thao thể hình.",
+                question: "3. Sắp xếp các câu sau thành đoạn hội thoại hợp lý:<br>a. Brian: That's great! I'm looking for a place to play basketball.<br>b. Ally: Oh, you mean the new sports center? It's really good.<br>c. Brian: Hi Ally! Is there a sports center near here?<br>d. Ally: Yes, they have a big indoor court there.<br>e. Brian: Perfect! I'll check it out tomorrow.",
+                options: [
+                    "c - b - a - d - e",
+                    "c - a - b - d - e",
+                    "a - c - b - d - e",
+                    "c - b - d - a - e"
+                ],
+                correct: 0,
+                translation: "Thứ tự đúng:<br>c. Brian: Chào Ally! Có trung tâm thể thao nào gần đây không?<br>b. Ally: Ồ, ý cậu là cái trung tâm thể thao mới hả? Nó thực sự rất tốt đấy.<br>a. Brian: Tuyệt quá! Tớ đang tìm một nơi để chơi bóng rổ.<br>d. Ally: Ừ, ở đó họ có một sân đấu trong nhà lớn lắm.<br>e. Brian: Hoàn hảo! Tớ sẽ đến xem thử vào ngày mai.",
+                details: {
+                    "A": "c - b - a - d - e: Chuỗi phản xạ chặt chẽ theo mô hình: Hỏi địa điểm chung -> Xác nhận tên địa điểm -> Nói rõ mục đích cụ thể (bóng rổ) -> Đưa ra cơ sở vật chất tương ứng (sân trong nhà) -> Hứa hẹn hành động.",
+                    "B": "c - a - b - d - e: Sai, câu (a) nói về mục đích chơi bóng rổ trước khi Ally xác nhận có trung tâm thể thao hay không.",
+                    "C": "a - c - b - d - e: Sai, tự nhiên nhảy vào kể mục đích khi chưa chào hỏi.",
+                    "D": "c - b - d - a - e: Sai, câu (d) của Ally tự nhiên nói về sân đấu trong nhà khi Brian chưa hề nhắc tới nhu cầu chơi môn thể thao nào."
+                },
+                why_correct: "Xâu chuỗi hội thoại logic: (c) Hỏi tổng quát xem có 'sports center' không. (b) Ally xác nhận 'the new sports center'. (a) Sau khi biết có trung tâm, Brian mới chia sẻ lý do 'looking for a place to play basketball'. (d) Nghe thấy môn bóng rổ, Ally lập tức giới thiệu cơ sở vật chất liên quan 'big indoor court'. (e) Brian chốt bằng từ cảm thán và lên lịch hẹn 'check it out tomorrow'.",
+                why_wrong: "Các phương án nhiễu đảo thứ tự khiến các câu cung cấp thông tin chi tiết (sân đấu trong nhà) xuất hiện trước khi người đối thoại đưa ra gợi ý nhu cầu (bóng rổ), làm mất tính tự nhiên."
+            }
+        ];
+
+        let questions = JSON.parse(JSON.stringify(quizData));
+        let userAnswers = {};
+
+        // Generate Floating Objects
+        const icons = ['⭐', '☁️', '✨', '🧭', '🗺️', '🏢', '⚡'];
+        const patternContainer = document.getElementById('patterns-container');
+        for (let i = 0; i < 20; i++) {
+            const el = document.createElement('div');
+            el.className = 'pattern-item';
+            el.innerText = icons[Math.floor(Math.random() * icons.length)];
+            el.style.left = Math.random() * 95 + 'vw';
+            el.style.top = Math.random() * 95 + 'vh';
+            el.style.animationDelay = Math.random() * 4 + 's';
+            el.style.animationDuration = (6 + Math.random() * 4) + 's';
+            patternContainer.appendChild(el);
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+
+            let currentEx = "";
+
+            questions.forEach((q, idx) => {
+                if (q.ex !== currentEx) {
+                    currentEx = q.ex;
+                    const exTitle = document.createElement('div');
+                    exTitle.className = 'exercise-title';
+                    exTitle.innerText = currentEx;
+                    container.appendChild(exTitle);
+                }
+
+                const card = document.createElement('div');
+                card.className = 'quiz-card';
+                card.id = `card-${idx}`;
+
+                const contextBox = document.createElement('div');
+                contextBox.className = 'context-box';
+                contextBox.innerHTML = `<strong>Gợi ý ngữ cảnh:</strong> ${q.context}`;
+                card.appendChild(contextBox);
+
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.innerHTML = `<strong>Câu ${idx + 1}:</strong> ${q.question}`;
+                card.appendChild(qText);
+
+                let mappedOptions = q.options.map((opt, oIdx) => {
+                    return { text: opt, isCorrect: oIdx === q.correct, letter: String.fromCharCode(65 + oIdx) };
+                });
+
+                mappedOptions = shuffle(mappedOptions);
+
+                const grid = document.createElement('div');
+                grid.className = 'options-grid';
+
+                mappedOptions.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-option';
+                    btn.innerHTML = `<strong>${opt.letter}.</strong> ${opt.text}`;
+                    btn.onclick = () => checkAnswer(idx, btn, opt.isCorrect, q);
+                    grid.appendChild(btn);
+                });
+
+                card.appendChild(grid);
+
+                const exp = document.createElement('div');
+                exp.className = 'explanation-box';
+                exp.id = `exp-${idx}`;
+                exp.innerHTML = `
+                    <div class="exp-section">
+                        <div class="exp-title">🌐 Bước 1: Dịch nghĩa toàn bộ hội thoại hoàn chỉnh</div>
+                        <div class="exp-content">${q.translation}</div>
+                    </div>
+                    <div class="exp-section">
+                        <div class="exp-title">📚 Bước 2: Dịch nghĩa chi tiết các phương án lựa chọn</div>
+                        <div class="exp-content">
+                            <strong>A.</strong> ${q.details.A || q.options[0]}<br>
+                            <strong>B.</strong> ${q.details.B || q.options[1]}<br>
+                            <strong>C.</strong> ${q.details.C || q.options[2]}<br>
+                            <strong>D.</strong> ${q.details.D || q.options[3]}<br>
+                        </div>
+                    </div>
+                    <div class="exp-section">
+                        <div class="exp-title">✅ Bước 3: Giải thích lý do đáp án được chọn là đúng</div>
+                        <div class="exp-content">${q.why_correct}</div>
+                    </div>
+                    <div class="exp-section">
+                        <div class="exp-title">❌ Bước 4: Giải thích lý do các đáp án còn lại sai</div>
+                        <div class="exp-content">${q.why_wrong}</div>
+                    </div>
+                `;
+                card.appendChild(exp);
+                container.appendChild(card);
+            });
+        }
+
+        function checkAnswer(qIdx, btn, isCorrect, originalQ) {
+            const card = document.getElementById(`card-${qIdx}`);
+            const buttons = card.querySelectorAll('.btn-option');
+            buttons.forEach(b => b.disabled = true);
+
+            userAnswers[qIdx] = isCorrect;
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+                playSound('correct');
+                celebrate();
+            } else {
+                btn.classList.add('wrong');
+                playSound('wrong');
+                buttons.forEach(b => {
+                    const origLetter = String.fromCharCode(65 + originalQ.correct);
+                    if (b.innerText.trim().startsWith(origLetter + ".")) {
+                        b.classList.add('correct');
+                    }
+                });
+            }
+
+            document.getElementById(`exp-${qIdx}`).style.display = 'block';
+        }
+
+        // Confetti
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let pieces = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function celebrate() {
+            const colors = ['#3182ce', '#319795', '#ed64a6', '#ecc94b', '#9f7aea'];
+            for(let i=0; i<50; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 6 + 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    spX: Math.random() * 4 - 2,
+                    spY: Math.random() * 4 + 4,
+                    rot: Math.random() * 360,
+                    rotSp: Math.random() * 4 - 2
+                });
+            }
+        }
+
+        function drawConfetti() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            pieces.forEach((p, i) => {
+                p.x += p.spX; p.y += p.spY; p.rot += p.rotSp;
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rot * Math.PI / 180);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+                ctx.restore();
+                if(p.y > canvas.height) pieces.splice(i, 1);
+            });
+            requestAnimationFrame(drawConfetti);
+        }
+        requestAnimationFrame(drawConfetti);
+
+        function submitQuiz() {
+            let score = 0;
+            questions.forEach((_, idx) => {
+                if (userAnswers[idx] === true) score++;
+            });
+
+            document.getElementById('score-display').innerText = `${score} / ${questions.length}`;
+            let advice = "";
+            const rate = score / questions.length;
+
+            if (rate === 1) {
+                advice = "Xuất sắc quá học trò ơi! 🎉 Em đã làm chủ hoàn toàn các cấu trúc hỏi đường và phản xạ hội thoại hàng ngày. Tiếp tục giữ vững phong độ đỉnh cao này nhé!";
+            } else if (rate >= 0.7) {
+                advice = "Kết quả rất tốt! 👍 Em chỉ nhầm lẫn một chút ở phần sắp xếp hội thoại logic do lướt nhanh quá thôi. Hãy xem lại kỹ các bước giải thích nối tiếp đại từ để rút kinh nghiệm.";
+            } else if (rate >= 0.4) {
+                advice = "Cố gắng lên nào! Hãy chú ý phân biệt rõ chức năng câu hỏi (hỏi đường, rủ rê hay hỏi màu sắc nghĩa bóng). Đọc thật kỹ Bước 3 và Bước 4 cô đã biên soạn nhé.";
+            } else {
+                advice = "Đừng lo lắng nhé! Chủ đề hỏi đường và liên kết hội thoại luôn cần phân tích chậm rãi. Em hãy mở lại bài tập này làm lại lần hai sau khi đọc hết phần dịch nghĩa nha!";
+            }
+
+            document.getElementById('advice-display').innerText = advice;
+            const resCard = document.getElementById('result-card');
+            resCard.style.display = 'block';
+            resCard.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.onload = renderQuiz;
+    </script>
+</body>
+</html>
